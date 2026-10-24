@@ -8,8 +8,12 @@ import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB when a connection string is configured.
+if (process.env.MONGO_URI) {
+  connectDB();
+} else {
+  console.warn("MONGO_URI is not defined. Server will run without MongoDB.");
+}
 
 const app = express();
 
@@ -17,7 +21,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
+      "http://localhost:4000",
       "http://localhost:5173",
       "http://localhost:8081",
     ],
